@@ -1,0 +1,30 @@
+# This file is being maintained by Puppet.
+# DO NOT EDIT.
+<%- Array(@principals).each do |princ| -%>
+  <%- _princ = '' -%>
+  <%- if scope.function_is_hash([princ]) -%>
+    <%- if scope.function_has_key([princ, 'deny']) and scope.function_str2bool([princ['deny']]) -%>
+      <%- _princ += 'deny:' -%>
+    <%- end -%>
+    <%- if scope.function_has_key([princ, 'file']) -%>
+      <%- _princ += 'file:' + princ['file'] -%>
+    <%- end -%>
+    <%- if scope.function_has_key([princ, 'gput']) -%>
+      <%- _princ += 'gput:' + princ['gput'] -%>
+    <%- end -%>
+    <%- if scope.function_has_key([princ, 'pcre']) -%>
+      <%- _princ += 'pcre:' + princ['pcre'] -%>
+    <%- end -%>
+    <%- if scope.function_has_key([princ, 'principal']) -%>
+      <%- _princ += 'princ:' + princ['principal'] -%>
+    <%- end -%>
+    <%- if scope.function_has_key([princ, 'regex']) -%>
+      <%- _princ += 'regex:' + princ['regex'] -%>
+    <%- end -%>
+  <%- elsif scope.function_is_string([princ]) -%>
+    <%- _princ = princ -%>
+  <%- else -%>
+    <%= scope.function_fail(["Each remctl acl principal declaration must be either a string or a hash as described in the remctl::acl manifest."]) -%>
+  <%- end -%>
+<%= _princ %>
+<%- end -%>

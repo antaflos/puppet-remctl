@@ -1,0 +1,46 @@
+# This file is being maintained by Puppet.
+# DO NOT EDIT.
+<%- Array(@commands).each do |command| -%>
+  <%- if scope.function_is_hash([command]) -%>
+    <%- if scope.function_has_key([command, 'command']) -%>
+      <%- _remctl_command = String(command['command']) -%>
+    <%- else -%>
+      <%- _remctl_command = String(@_title) -%>
+    <%- end -%>
+    <%- if scope.function_has_key([command, 'subcommand']) -%>
+      <%- _remctl_command += ' ' + String(command['subcommand']) -%>
+    <%- else -%>
+      <%= scope.function_fail(["Each remctl command requires a subcommand! If all, use \'ALL\', and if none, use \'EMPTY\'. See man remctld(8) for more details."]) -%>
+    <%- end -%>
+    <%- if scope.function_has_key([command, 'executable']) -%>
+      <%- if String(command['executable']).start_with?('/') -%>
+        <%- _remctl_command += ' ' + String(command['executable']) -%>
+      <%- else -%> 
+        <%- if @executable_path -%>
+          <%- _remctl_command += ' ' + String(@executable_path) + '/' + String(command['executable']) -%>
+        <%- else -%>
+          <%= scope.function_fail(["Each remctl command\'s executable must be a full path.  If many share the same directory, that directory may be specified with executable_path."]) -%>
+        <%- end -%>
+      <%- end -%>
+    <%- else -%>
+      <%= scope.function_fail(["Each remctl command must have an executable."]) -%>
+    <%- end -%>
+    <%- if scope.function_has_key([command, 'options']) -%>
+      <%- Hash(command['options']).each do |key, value| -%>
+        <%- _remctl_command += ' ' + String(key) + '=' + String(value) -%>
+      <%- end -%>
+    <%- end -%>
+    <%- if scope.function_has_key([command, 'acl']) -%>
+      <%- Array(command['acl']).each do |value| -%>
+        <%- _remctl_command += ' ' + String(value) -%>
+      <%- end -%>
+    <%- else -%>
+      <%= scope.function_fail(["Each remctl command requires an acl! If all, use \'ANYUSER\'. See man remctld(8) for more details."]) -%>
+    <%- end -%>
+  <%- elsif scope.function_is_string([command]) -%>
+    <%- _remctl_command = command -%>
+  <%- else -%>
+    <%= scope.function_fail(["Each remctl command declaration must be either a string or a hash as described in the remctl::command manifest."]) -%>
+  <%- end -%>
+<%= _remctl_command %>
+<%- end -%>
