@@ -54,7 +54,7 @@
 # command:    String (required)
 # subcommand: String (required)
 # executable: String (required)
-# options:    Hash of option=>value where value is String (optional, see note)
+# options:    (Hash of option=>value where value is String) _or_ String (optional, see note)
 # acl:        String _or_ Array of String (required)
 #
 # For remctl's list of option=value pairs, see man remctld(8). Also see the man

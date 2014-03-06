@@ -30,6 +30,7 @@ describe 'remctl::command' do
           {
             'subcommand' => 'view',
             'executable' => 'doaccount',
+            'options'    => 'logmask=2',
             'acl'        => 'ANYUSER',
           },
           {
@@ -56,7 +57,7 @@ describe 'remctl::command' do
           'group'   => 'root',
           'mode'    => '0644',
           'owner'   => 'root',
-          'content' => /^accounts view \/usr\/local\/bin\/doaccount ANYUSER$/,
+          'content' => /^accounts view \/usr\/local\/bin\/doaccount logmask=2 ANYUSER$/,
         })
       end
 
