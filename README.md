@@ -1,5 +1,7 @@
 # remctl
 
+Current build status for master branch: [![Build Status](https://travis-ci.org/NMTCC/puppet-remctl.png?branch=master)](https://travis-ci.org/NMTCC/puppet-remctl)
+
 #### Table of Contents
 
 1. [Overview](#overview)
