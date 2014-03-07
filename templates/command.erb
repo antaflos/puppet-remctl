@@ -26,8 +26,14 @@
       <%= scope.function_fail(["Each remctl command must have an executable."]) -%>
     <%- end -%>
     <%- if scope.function_has_key([command, 'options']) -%>
-      <%- Hash(command['options']).each do |key, value| -%>
-        <%- _remctl_command += ' ' + String(key) + '=' + String(value) -%>
+      <%- if scope.function_is_hash([(command['options'])]) -%>
+        <%- (command['options']).each do |key, value| -%>
+          <%- _remctl_command += ' ' + String(key) + '=' + String(value) -%>
+        <%- end -%>
+      <%- elsif scope.function_is_string([(command['options'])]) -%>
+        <%- _remctl_command += ' ' + (command['options']) -%>
+      <%- else -%>
+        <%= scope.function_fail(['The options parameter to the command must be a hash or string!']) -%>
       <%- end -%>
     <%- end -%>
     <%- if scope.function_has_key([command, 'acl']) -%>

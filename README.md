@@ -189,7 +189,7 @@ String.  Required.  If not a fully qualified path, defaults to "$remctl::command
 
 ##### `options`
 
-Hash of 'option'=>value.  Optional.  For the list of valid option=value pairs, see man remctld(8).
+Hash of 'option'=>value | String.  Optional.  For the list of valid option=value pairs, see man remctld(8).  String is not parsed for validity, but should be valid, as 'option1=value1 option2=value2'.
 
 ##### `acl`
 
