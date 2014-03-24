@@ -26,21 +26,21 @@ If any nonstandard configuration is needed, the remctl class may be invoked with
 ```
 remctl::acl { 'accounts':
   principals => [
-      {
-            'principal' => 'baduser@EXAMPLE.ORG',
+    {
+      'principal' => 'baduser@EXAMPLE.ORG',
       'deny'      => true,
     },
-
+    
     {
-          'file'      => '/etc/remctl/acl/admins',
+      'file'      => '/etc/remctl/acl/admins',
     },
-
+    
     'deny:otherbaduser@EXAMPLE.ORG',
-
+    
     {
-          'principal' => 'service/admin@EXAMPLE.ORG',
+      'principal' => 'service/admin@EXAMPLE.ORG',
     },
-
+    
     'service/other@EXAMPLE.ORG',
   ],
 }
