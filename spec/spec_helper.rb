@@ -27,4 +27,28 @@ require 'puppetlabs_spec_helper/module_spec_helper'
     :remctl_xinetd_socket_type  => 'stream',
     :remctl_xinetd_user         => 'root',
   },
+  'Ubuntu 12.04' => {
+    :operatingsystem            => 'Ubuntu',
+    :operatingsystemmajrelease  => '12',
+    :osfamily                   => 'Debian',
+
+    :acldir                     => '/etc/remctl/acl',
+    :confdir                    => '/etc/remctl/conf.d',
+    :conffile                   => '/etc/remctl/remctl.conf',
+    :install                    => 'true',
+    :package_name               => 'remctl-server',
+    :package_ensure             => 'latest',
+    :parent_folders             => ['/etc/remctl'],
+
+    :remctl_xinetd              => 'true',
+    :remctl_xinetd_disable      => 'no',
+    :remctl_xinetd_ensure       => 'present',
+    :remctl_xinetd_group        => 'root',
+    :remctl_xinetd_port         => '4373',
+    :remctl_xinetd_protocol     => 'tcp',
+    :remctl_xinetd_server       => '/usr/sbin/remctld',
+    :remctl_xinetd_service_name => 'remctl',
+    :remctl_xinetd_socket_type  => 'stream',
+    :remctl_xinetd_user         => 'root',
+  },
 }
