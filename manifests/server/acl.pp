@@ -9,7 +9,7 @@
 #
 #
 # With this module, this might look like:
-# remctl::acl { 'accounts':
+# remctl::server::acl { 'accounts':
 #   principals => [
 #     {
 #       'principal' => 'baduser@EXAMPLE.ORG',
@@ -26,7 +26,7 @@
 #   ],
 # }
 #
-# This would create a file at $remctl::acldir/accounts with the contents above.
+# This would create a file at $remctl::server::acldir/accounts with the contents above.
 #
 # This rather ugly example points out the use of this module: the contents of
 # the principals array can be a hash, allowing verbosity, or a string, allowing
@@ -44,18 +44,18 @@
 # Note that there are no required parameters, but at least one of the following
 # should be declared: file, principal, gput, pcre, regex. Deny is used with an
 # existing declaration of one of these types.
-define remctl::acl (
+define remctl::server::acl (
   $principals
 ) {
-  include remctl
+  include remctl::server
   include stdlib
 
-  file { "${remctl::acldir}/${title}":
+  file { "${remctl::server::acldir}/${title}":
     ensure  => 'file',
     content => template('remctl/acl.erb'),
     group   => 'root',
     mode    => '0644',
     owner   => 'root',
-    require => File[$remctl::acldir],
+    require => File[$remctl::server::acldir],
   }
 }

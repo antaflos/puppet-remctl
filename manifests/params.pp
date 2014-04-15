@@ -7,9 +7,13 @@ class remctl::params {
       $confdir                      = '/etc/remctl/conf.d'
       $conffile                     = '/etc/remctl.conf'
       $install                      = true
-      $package_name                 = 'remctl'
-      $package_ensure               = 'latest'
       $parent_folders               = ['/etc/remctl']
+
+      $server_package_name          = 'remctl'
+      $server_package_ensure        = 'latest'
+
+      $client_package_name          = $server_package_name
+      $client_package_ensure        = $server_package_ensure
 
       $remctl_xinetd                = true
       $remctl_xinetd_access_times   = undef
@@ -42,9 +46,13 @@ class remctl::params {
       $confdir                      = '/etc/remctl/conf.d'
       $conffile                     = '/etc/remctl/remctl.conf'
       $install                      = true
-      $package_name                 = 'remctl-server'
-      $package_ensure               = 'latest'
       $parent_folders               = ['/etc/remctl']
+
+      $server_package_name          = 'remctl-server'
+      $server_package_ensure        = 'latest'
+
+      $client_package_name          = 'remctl-client'
+      $client_package_ensure        = 'latest'
 
       $remctl_xinetd                = true
       $remctl_xinetd_access_times   = undef

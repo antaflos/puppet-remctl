@@ -2,7 +2,7 @@ require 'spec_helper'
 
 oses = @oses
 
-describe 'remctl::command' do
+describe 'remctl::server::command' do
 
   oses.each do |osname, os|
 

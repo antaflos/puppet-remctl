@@ -24,7 +24,7 @@
   <%- elsif scope.function_is_string([princ]) -%>
     <%- _princ = princ -%>
   <%- else -%>
-    <%= scope.function_fail(["Each remctl acl principal declaration must be either a string or a hash as described in the remctl::acl manifest."]) -%>
+    <%= scope.function_fail(["Each remctl acl principal declaration must be either a string or a hash as described in the remctl::server::acl manifest."]) -%>
   <%- end -%>
 <%= _princ %>
 <%- end -%>
