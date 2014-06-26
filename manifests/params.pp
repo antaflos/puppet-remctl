@@ -54,6 +54,30 @@ class remctl::params {
       $client_package_name          = 'remctl-client'
       $client_package_ensure        = 'latest'
 
+      $python_package_name          = 'python-remctl'
+      $python_package_ensure        = 'present'
+
+      $php5_package_name            = 'php5-remctl'
+      $php5_package_ensure          = 'present'
+
+      $devel_package_name           = 'libremctl-dev'
+      $devel_package_ensure         = 'present'
+
+      case $::lsbdistcodename {
+        # In Ubuntu Precise (and Debian Squeeze, which we don't really want to
+        # support) this package is called libremctl-ruby
+        'precise', 'squeeze': {
+          $ruby_package_name = 'libremctl-ruby'
+        }
+        # In all other of our supported Debians (trusty, wheezy, jessie) this
+        # package is named ruby-remctl
+        default: {
+          $ruby_package_name = 'ruby-remctl'
+        }
+      }
+
+      $ruby_package_ensure          = 'present'
+
       $remctl_xinetd                = true
       $remctl_xinetd_access_times   = undef
       $remctl_xinetd_bind           = undef
