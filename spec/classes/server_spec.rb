@@ -2,7 +2,7 @@ require 'spec_helper'
 
 oses = @oses
 
-describe 'remctl' do
+describe 'remctl::server' do
 
   oses.each do |osname, os|
 
@@ -17,9 +17,9 @@ describe 'remctl' do
       describe '#install' do
         context 'default' do
           it 'should install required packages' do
-            Array(os[:package_name]).each do |package|
+            Array(os[:server_package_name]).each do |package|
               should contain_package(package).with({
-                'ensure' => os[:package_ensure],
+                'ensure' => os[:server_package_ensure],
               })
             end
             os[:parent_folders].each do |folder|
@@ -57,9 +57,9 @@ describe 'remctl' do
           } end
 
           it 'should install required packages' do
-            Array(os[:package_name]).each do |package|
+            Array(os[:server_package_name]).each do |package|
               should contain_package(package).with({
-                'ensure' => os[:package_ensure],
+                'ensure' => os[:server_package_ensure],
               })
             end
             os[:parent_folders].each do |folder|
@@ -98,7 +98,7 @@ describe 'remctl' do
           } end
 
           it 'should NOT install packages' do
-            Array(os[:package_name]).each do |package|
+            Array(os[:server_package_name]).each do |package|
               should_not contain_package(package)
             end
             os[:parent_folders].each do |folder|

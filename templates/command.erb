@@ -46,7 +46,7 @@
   <%- elsif scope.function_is_string([command]) -%>
     <%- _remctl_command = command -%>
   <%- else -%>
-    <%= scope.function_fail(["Each remctl command declaration must be either a string or a hash as described in the remctl::command manifest."]) -%>
+    <%= scope.function_fail(["Each remctl command declaration must be either a string or a hash as described in the remctl::server::command manifest."]) -%>
   <%- end -%>
 <%= _remctl_command %>
 <%- end -%>

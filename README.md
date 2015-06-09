@@ -23,8 +23,8 @@ The remctl module handles installing remctl with relatively standard defaults. I
 
 If any nonstandard configuration is needed, the remctl class may be invoked with any required options; however, just applying an ACL or command will implicitly install the server and daemon.  Standard usage might look like this:
 
-```
-remctl::acl { 'accounts':
+```puppet
+remctl::server::acl { 'accounts':
   principals => [
     {
       'principal' => 'baduser@EXAMPLE.ORG',
@@ -45,7 +45,7 @@ remctl::acl { 'accounts':
   ],
 }
 
-remctl::command { 'accounts':
+remctl::server::command { 'accounts':
   executable_path => '/usr/local/bin',
   commands        => [
     {
@@ -89,7 +89,24 @@ Note that the commands and ACL definitions may include hashes, allowing verbosit
 
 ## Usage
 
-### Class `::remctl`
+### Class `::remctl::client`
+
+Installs the remctl client. On RedHat this is in the same package as the remctl
+server program, while on Debian it has its own package. Use this class to
+install just the client program (`remctl`) without installing and configuring
+the remctl server (`remctld`).
+
+#### Parameters
+
+##### `package_name`
+
+(optionally Array of) String: defaults to 'remctl' on RedHat and 'remctl-client' on Debian.  The name of the package for the remctl client.
+
+##### `package_ensure`
+
+String: defaults to 'latest'. The ensure state of the remctl client package.
+
+### Class `::remctl::server`
 
 For the remctl base class, each of the options for the puppetlabs/xinetd class is broken out as `xinetd_{optionname}`.  Additionally, each option for  puppetlabs/xinetd::service is broken out as `remctl_xinetd_{optionname}`.  Aside: perhaps this naming scheme isn't the best.  If you'd like to change it, see the contribution guide at the bottom of this document!
 
@@ -107,7 +124,7 @@ String: defaults to '/etc/remctl/conf.d'.  The directory the command module's co
 
 ##### `conffile`
 
-String: defaults to '/etc/remctl.conf'.  The file that the remctl daemon reads from; this file only contains an 'include $remctl::confdir'.
+String: defaults to '/etc/remctl.conf'.  The file that the remctl daemon reads from; this file only contains an 'include $remctl::server::confdir'.
 
 ##### `install`
 
@@ -115,19 +132,19 @@ Boolean: defaults to true.  Whether to install the 'remctl' package(s).
 
 ##### `package_name`
 
-(optionally Array of) String: defaults to 'remctl'.  The name of the package for remctl.
+(optionally Array of) String: defaults to 'remctl' on RedHat and 'remctl-server' on Debian.  The name of the package for the remctl server.
 
 ##### `package_ensure`
 
-String: defaults to 'latest'.  The ensure state of the remctl package.
+String: defaults to 'latest'.  The ensure state of the remctl server package.
 
 ##### `parent_folders`
 
-Array of String: defaults to ['/etc/remctl'].  A list of folders to ensure exist for this class; used for the parent folders of $remctl::acldir and $remctl::confdir.
+Array of String: defaults to ['/etc/remctl'].  A list of folders to ensure exist for this class; used for the parent folders of $remctl::server::acldir and $remctl::server::confdir.
 
-### Definition `::remctl::acl`
+### Definition `::remctl::server::acl`
 
-There is only one, required, parameter for the acl definition.  The title of the remctl::acl{} is the filename for the ACL under the directory $remctl::acldir.
+There is only one, required, parameter for the acl definition.  The title of the `remctl::server::acl` is the filename for the ACL under the directory $remctl::server::acldir.
 
 #### Parameters
 
@@ -161,9 +178,9 @@ String.  The name of a specific principal to allow (the most common option).  If
 
 Regex|String.  Likely an alias for pcre, this is, just as it says on the tin, a regular expression.
 
-### Definition `::remctl::command`
+### Definition `::remctl::server::command`
 
-There are two parameters for the command definition.  The title of the remctl::command{} is the filename for the configuration file under $remctl::configdir that these commands are inserted into.
+There are two parameters for the command definition.  The title of the remctl::server::command{} is the filename for the configuration file under $remctl::server::configdir that these commands are inserted into.
 
 #### Parameters
 
@@ -179,7 +196,7 @@ Array of ( String | Hash ).  Required.  An ordered list of commands to insert in
 
 ##### `command`
 
-String: defaults to the title of the remctl::command{} call.  Required.  The name of the command to allow from the remote client.
+String: defaults to the title of the `remctl::server::command` call.  Required.  The name of the command to allow from the remote client.
 
 ##### `subcommand`
 
@@ -187,7 +204,7 @@ String.  Required.  A subcommand name that can allow for different command optio
 
 ##### `executable`
 
-String.  Required.  If not a fully qualified path, defaults to "$remctl::command::executable_path/$executable" if $remctl::command::executable_path is set; otherwise (if it's not a fully qualified path), the manifest fails.  This is the executable called by remctl when this command and subcommand are encountered.
+String.  Required.  If not a fully qualified path, defaults to "$remctl::server::command::executable_path/$executable" if $remctl::server::command::executable_path is set; otherwise (if it's not a fully qualified path), the manifest fails.  This is the executable called by remctl when this command and subcommand are encountered.
 
 ##### `options`
 

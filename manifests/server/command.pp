@@ -10,7 +10,7 @@
 #
 #
 # With this module, this might would look like:
-# remctl::command { 'accounts':
+# remctl::server::command { 'accounts':
 #   executable_path => '/usr/local/bin',
 #   commands        => [
 #     {
@@ -63,22 +63,22 @@
 #
 # Note that executable_path is not a search path; it must be a single directory.
 # See man remctld(8) for proper string syntax.
-define remctl::command (
+define remctl::server::command (
   $commands,
   $executable_path = false,
 ) {
 
-  include remctl
+  include remctl::server
   include stdlib
 
   $_title = $title
 
-  file { "${remctl::confdir}/${title}":
+  file { "${remctl::server::confdir}/${title}":
     ensure  => 'file',
     content => template('remctl/command.erb'),
     group   => 'root',
     mode    => '0644',
     owner   => 'root',
-    require => File[[$remctl::confdir,$remctl::conffile]],
+    require => File[[$remctl::server::confdir, $remctl::server::conffile]],
   }
 }
