@@ -38,6 +38,7 @@ class remctl::server (
   $remctl_xinetd_server         = $remctl::params::remctl_xinetd_server,
   $remctl_xinetd_server_args    = $remctl::params::remctl_xinetd_server_args,
   $remctl_xinetd_service_name   = $remctl::params::remctl_xinetd_service_name,
+  $remctl_xinetd_service_type   = $remctl::params::remctl_xinetd_service_type,
   $remctl_xinetd_socket_type    = $remctl::params::remctl_xinetd_socket_type,
   $remctl_xinetd_user           = $remctl::params::remctl_xinetd_user,
   $remctl_xinetd_wait           = $remctl::params::remctl_xinetd_wait,

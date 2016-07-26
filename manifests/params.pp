@@ -36,6 +36,7 @@ class remctl::params {
       $remctl_xinetd_server         = '/usr/sbin/remctld'
       $remctl_xinetd_server_args    = undef
       $remctl_xinetd_service_name   = 'remctl'
+      $remctl_xinetd_service_type   = undef
       $remctl_xinetd_socket_type    = 'stream'
       $remctl_xinetd_user           = 'root'
       $remctl_xinetd_wait           = undef
